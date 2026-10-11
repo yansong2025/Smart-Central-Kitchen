@@ -1,0 +1,12 @@
+[server]
+# Serves static/ at /app/static so the 3D twin can load three.js without internet.
+enableStaticServing = true
+
+[theme]
+base = "light"
+primaryColor = "#9b1c1c"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f4f1eb"
+textColor = "#1f1d1a"
+borderColor = "#e1ddd3"
+baseRadius = "0.75rem"
