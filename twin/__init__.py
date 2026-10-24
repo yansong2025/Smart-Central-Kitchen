@@ -51,6 +51,13 @@ def kitchen_state(now):
     return {
         "floor": layout.FLOOR,
         "zones": zones,
+        "safety_zones": [
+            {"x": 5.9, "z": -5.5, "w": 4.2, "d": 4.6, "color": 0xd03b3b},
+            {"x": -0.4, "z": 5.5, "w": 6.4, "d": 4.6, "color": 0xd03b3b},
+            {"x": 0, "z": 0, "w": 26, "d": 5.6, "color": 0xe6a12c},
+            {"x": -4.45, "z": -5.5, "w": 15.7, "d": 4.6, "color": 0x2a78d6},
+            {"x": 10.2, "z": -5.5, "w": 3.8, "d": 4.6, "color": 0x2a78d6},
+        ],
         "route": [[x, z] for x, z, _, _ in layout.AMR_ROUTE],
         "amr": {"name": amr.NAME, "kind": "amr", "x": robot["x"], "z": robot["z"], "blocked": robot["blocked"],
                 "label": "", "carrying": True, "clickable": True},
@@ -82,6 +89,9 @@ def dining_state(now):
     return {
         "floor": {"width": 13.5, "depth": 9.0, "color": "#e9dcc6"},
         "zones": zones,
+        "safety_zones": [
+            {"x": 0, "z": 0, "w": 13.0, "d": 4.2, "color": 0xe6a12c},
+        ],
         "route": [],
         "amr": {"name": foh_robot.NAME, "kind": "server", **place(robot), "blocked": False,
                 "label": robot["short"], "carrying": robot["carrying"], "clickable": False},
@@ -90,7 +100,8 @@ def dining_state(now):
 
 def dining_twin(now, height=460):
     """Draw the dining-room twin for the FOH Service Robot page."""
-    state = {**dining_state(now), "focus": "dining", "height": height}
+    state = {**dining_state(now), "focus": "dining", "height": height,
+             "safety_zones_visible": st.session_state.get("safety_zones", False)}
     _draw(data=state, key="dining_twin", height=height, on_clicked_change=lambda: None)
 
 
@@ -100,7 +111,8 @@ def kitchen_twin(now, focus="overview", height=460):
 
     Clicking a zone or the robot opens the page of the system behind it.
     """
-    state = {**kitchen_state(now), "focus": focus, "height": height}
+    state = {**kitchen_state(now), "focus": focus, "height": height,
+             "safety_zones_visible": st.session_state.get("safety_zones", False)}
     result = _draw(data=state, key="kitchen_twin", height=height, on_clicked_change=lambda: None)
     page = click_targets().get(result.clicked)
     if page:

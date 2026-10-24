@@ -99,6 +99,10 @@ page has its own dining-room twin, drawn by the same `kitchen.js`.
   sent as data every refresh; `kitchen.js` updates the scene in place so the
   camera does not reset. Zone names in `sim/layout.py` must match sensor names
   in `sim/temperature.py`.
+- The sidebar's **Safety zone overlay** toggle shows or hides the red Zone A
+  (Duck Oven and Dim Sum Forming), amber Zone B (main CPK aisle and FOH pass),
+  and blue Zone C (cold storage and hot holding) on the twins. Outlined areas
+  include the surrounding equipment space and robot routes.
 - **Clicking the twin opens a page.** `kitchen.js` sends the clicked zone's
   name; `twin/__init__.py` maps it to a page (`click_targets`) and stores it in
   `st.session_state["open_page"]`; `app.py` does the `st.switch_page`.

@@ -132,6 +132,21 @@ async function build(parent, data) {
   addBox(0.2, 3, floorD, wall, -floorW / 2, 1.5, 0, scene);
   addBox(0.2, 3, floorD, wall, floorW / 2, 1.5, 0, scene);
 
+  scene.add(Object.assign(new THREE.Group(), { name: "safety-zones" }));
+  for (const zone of data.safety_zones) {
+    const safetyZones = scene.getObjectByName("safety-zones");
+    const overlay = addBox(zone.w, 0.02, zone.d,
+      material(zone.color, { transparent: true, opacity: 0.38, depthWrite: false }),
+      zone.x, 0.07, zone.z, safetyZones);
+    overlay.castShadow = false;
+    const outline = new THREE.LineSegments(
+      new THREE.EdgesGeometry(new THREE.BoxGeometry(zone.w, 0.02, zone.d)),
+      new THREE.LineBasicMaterial({ color: zone.color }),
+    );
+    outline.position.set(zone.x, 0.07, zone.z);
+    safetyZones.add(outline);
+  }
+
   // ---- One simple model per kind of zone -----------------------------------
   // Each builder gets the zone's group and `front`: +1 or -1, the side facing
   // the corridor. It returns the parts that update() and animate() change.
@@ -347,6 +362,7 @@ async function build(parent, data) {
   // ---- Apply new state from Python -----------------------------------------
   function update(state, setTriggerValue) {
     sendToPython = setTriggerValue;
+    scene.getObjectByName("safety-zones").visible = state.safety_zones_visible;
     for (const zone of state.zones) {
       const model = zones[zone.name];
       model.alert = zone.alert;
