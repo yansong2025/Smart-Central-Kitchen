@@ -33,6 +33,10 @@ Built with Streamlit and three.js as a class proof of concept.
 - **3D digital twin.** Rotate, zoom, and click any zone to open its page.
   Zones turn red when something is wrong, the chiller door swings open, and
   the robot moves in real time.
+- **Safety zone overlay.** Use the sidebar toggle to show or hide the red
+  thermal/mechanical zone, amber robot traffic corridors, and blue IoT
+  environmental telemetry zone on the kitchen and dining-room twins. Colored
+  outlines mark the wider safety areas around the equipment and robot routes.
 - **Demo Controls.** Sidebar switches trigger each fault. Switch one on and
   the charts, alerts and twin react within seconds; switch it off and the
   system recovers.

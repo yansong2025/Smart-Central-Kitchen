@@ -46,6 +46,13 @@ def track_alerts():
 track_alerts()
 
 with st.sidebar:
+    st.toggle("Safety Zone Overlay", key="safety_zones",
+              help="Show colour-coded hazard and robot-traffic areas on the kitchen and dining-room twins.")
+    st.markdown("🔴 **Zone A · Thermal & Mechanical** \nDuck Oven + Dim Sum Forming")
+    st.markdown("🟠 **Zone B · Human & Robot traffic** \nMain Aisle + FOH Pass")
+    st.markdown("🔵 **Zone C · Food Safety Environment** \nCold + Hot Holding")
+    st.divider()
+
     st.header("Demo Controls")
     st.caption("Switch on an event, then watch the dashboards react. Switch it off to recover.")
     for system in SYSTEMS:
