@@ -1,0 +1,121 @@
+/* The inspector panel and hint that float over the 3D twin (see kitchen.js). */
+
+.twin-box { position: relative; font-family: Inter, system-ui, sans-serif; color: #101828; }
+.mi {
+  font-family: "Material Symbols Rounded"; font-weight: normal; font-style: normal; font-size: 18px;
+  line-height: 1; font-feature-settings: "liga"; -webkit-font-smoothing: antialiased; display: inline-block;
+}
+
+/* Hint chip, shown while nothing is selected. */
+.twin-hint {
+  position: absolute; left: 14px; top: 14px; display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 13px; border-radius: 999px; font-size: 12.5px; font-weight: 600; color: #344054;
+  background: rgba(255, 255, 255, 0.92); border: 1px solid #e4e7ec;
+  box-shadow: 0 4px 14px rgba(16, 24, 40, 0.08); pointer-events: none; transition: opacity 0.2s;
+}
+.twin-hint .mi { color: #b42318; }
+.twin-hint.hidden { opacity: 0; }
+
+/* Inspector panel for the selected zone. */
+.inspector {
+  position: absolute; left: 14px; top: 14px; width: 290px; max-width: calc(100% - 28px);
+  padding: 14px 14px 12px; border-radius: 16px; background: rgba(255, 255, 255, 0.97);
+  border: 1px solid #e4e7ec; box-shadow: 0 16px 40px rgba(16, 24, 40, 0.16);
+  backdrop-filter: blur(8px); display: none;
+}
+.inspector.open { display: block; animation: pop 0.18s ease-out; }
+@keyframes pop { from { opacity: 0; transform: translateY(-6px) scale(0.98); } to { opacity: 1; transform: none; } }
+
+.insp-head { display: flex; align-items: flex-start; gap: 10px; }
+.insp-icon {
+  flex: none; width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center;
+  background: #f2f4f7; color: #475467;
+}
+.insp-icon .mi { font-size: 21px; }
+.insp-icon.alert { background: #fef3f2; color: #b42318; }
+.insp-name { font-size: 15px; font-weight: 680; letter-spacing: -0.01em; line-height: 1.25; }
+.insp-sub { font-size: 12px; color: #98a2b3; margin-top: 2px; line-height: 1.35; }
+.insp-close {
+  margin-left: auto; flex: none; width: 28px; height: 28px; border-radius: 8px; border: 0; background: transparent;
+  color: #98a2b3; cursor: pointer; display: grid; place-items: center;
+}
+.insp-close:hover { background: #f2f4f7; color: #344054; }
+
+.insp-reading { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px;
+  padding: 10px 12px; border-radius: 11px; background: #f8fafc; border: 1px solid #eef0f3; }
+.insp-value { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.insp-value.small { font-size: 13.5px; font-weight: 600; letter-spacing: 0; }
+
+.pill {
+  display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px 2px 7px; border-radius: 999px;
+  font-size: 11.5px; font-weight: 650; line-height: 19px; white-space: nowrap; border: 1px solid transparent;
+}
+.pill .mi { font-size: 14px; }
+.pill.ok { color: #067647; background: #ecfdf3; border-color: #abefc6; }
+.pill.crit { color: #b42318; background: #fef3f2; border-color: #fecdca; }
+.pill.warn { color: #b54708; background: #fffaeb; border-color: #fedf89; }
+
+.insp-actions { display: grid; gap: 8px; margin-top: 12px; }
+.insp-btn {
+  display: flex; align-items: center; justify-content: center; gap: 7px; width: 100%; padding: 10px 12px;
+  border-radius: 11px; font: 650 13.5px Inter, system-ui, sans-serif; cursor: pointer; border: 1px solid transparent;
+  transition: transform 0.08s, filter 0.15s;
+}
+.insp-btn:active { transform: scale(0.98); }
+.insp-btn.fault { background: #b42318; color: #ffffff; box-shadow: 0 4px 12px rgba(180, 35, 24, 0.25); }
+.insp-btn.fault:hover { filter: brightness(1.08); }
+.insp-btn.resolve { background: #ecfdf3; color: #067647; border-color: #abefc6; }
+.insp-btn.resolve:hover { background: #dcfae6; }
+.insp-btn.page { background: #ffffff; color: #344054; border-color: #d0d5dd; }
+.insp-btn.page:hover { background: #f8fafc; }
+.insp-btn small { font-weight: 500; opacity: 0.85; }
+.insp-note { font-size: 12px; color: #98a2b3; text-align: center; padding: 2px 0; }
+
+/* In-view toolbar: camera views and layers, top right. */
+.twin-tools { position: absolute; right: 14px; top: 14px; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.tool-group {
+  display: flex; gap: 2px; padding: 3px; border-radius: 12px; background: rgba(255, 255, 255, 0.94);
+  border: 1px solid #e4e7ec; box-shadow: 0 4px 14px rgba(16, 24, 40, 0.08);
+}
+.tool-group button {
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border: 0; border-radius: 9px;
+  background: transparent; color: #475467; font: 600 12.5px Inter, system-ui, sans-serif; cursor: pointer; white-space: nowrap;
+}
+.tool-group button .mi { font-size: 17px; }
+.tool-group button:hover { background: #f2f4f7; color: #101828; }
+.tool-group button.on { background: #101828; color: #ffffff; }
+.compact .tool-text { display: none; }
+.compact .tool-group button { padding: 6px 7px; }
+
+/* Temperature layer legend, bottom left. */
+.twin-legend {
+  position: absolute; left: 14px; bottom: 14px; display: none; grid-template-columns: repeat(3, auto); gap: 4px 18px;
+  padding: 10px 13px; border-radius: 12px; background: rgba(255, 255, 255, 0.94); border: 1px solid #e4e7ec;
+  box-shadow: 0 4px 14px rgba(16, 24, 40, 0.08); font-size: 11.5px; color: #475467;
+}
+.twin-legend.show { display: grid; }
+.twin-legend b { grid-column: 1 / -1; font-size: 12px; color: #101828; }
+.twin-legend i { grid-column: 1 / -1; height: 8px; border-radius: 99px;
+  background: linear-gradient(90deg, #17b26a 0%, #17b26a 55%, #f79009 80%, #d92d20 100%); }
+.twin-legend span:nth-of-type(2) { text-align: center; }
+.twin-legend span:nth-of-type(3) { text-align: right; }
+
+/* Hover tooltip. */
+.twin-tip {
+  position: absolute; display: none; pointer-events: none; padding: 7px 10px; border-radius: 9px;
+  background: #101828; color: #ffffff; font-size: 12px; line-height: 1.35; box-shadow: 0 6px 18px rgba(16, 24, 40, 0.25);
+}
+.twin-tip.show { display: grid; }
+.twin-tip span { color: #d0d5dd; font-variant-numeric: tabular-nums; }
+
+/* Narrow twins (close-up cards): no room for the hint chip next to the toolbar. */
+.compact .twin-hint { display: none; }
+
+/* Mini-chart of the last 10 minutes in the inspector panel. */
+.insp-chart { margin-top: 10px; padding: 8px 10px 4px; border-radius: 11px; border: 1px solid #eef0f3; background: #ffffff; }
+.insp-chart-head { display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  font-size: 11px; font-weight: 650; letter-spacing: 0.04em; text-transform: uppercase; color: #98a2b3; }
+.insp-chart svg { display: block; margin-top: 4px; font-family: Inter, system-ui, sans-serif; font-variant-numeric: tabular-nums; }
+.insp-key { display: inline-flex; align-items: center; gap: 5px; text-transform: none; letter-spacing: 0; font-weight: 600; color: #667085; }
+.insp-key i { width: 12px; height: 2px; background: #2a78d6; display: inline-block; }
+.insp-key i.dash { background: repeating-linear-gradient(90deg, #98a2b3 0 3px, transparent 3px 5px); margin-left: 4px; }

@@ -44,7 +44,8 @@ def history(now, seconds=HISTORY_S):
         # The slow wave stands in for compressor cycling and sensor drift.
         temp = sensor["base"] + 0.55 * clock.wave(ticks, seed=i)
         if "event" in sensor:
-            temp = temp + sensor["event_rise"] * events.intensity(sensor["event"], ticks)
+            # A short ramp so the demo shows the excursion within a few seconds.
+            temp = temp + sensor["event_rise"] * events.intensity(sensor["event"], ticks, ramp_s=12)
         frames.append(pd.DataFrame({"time": clock.as_times(ticks), "sensor": sensor["name"], "temp_c": temp.round(2)}))
     return pd.concat(frames, ignore_index=True)
 

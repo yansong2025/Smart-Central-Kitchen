@@ -1,12 +1,27 @@
 [server]
-# Serves static/ at /app/static so the 3D twin can load three.js without internet.
+# Serves static/ at /app/static: three.js for the 3D twins and the Inter font,
+# so the demo works without internet.
 enableStaticServing = true
 
 [theme]
 base = "light"
-primaryColor = "#9b1c1c"
+font = "Inter, sans-serif"
+headingFontWeights = 650
+primaryColor = "#b42318"
+backgroundColor = "#f5f6f8"
+secondaryBackgroundColor = "#eef0f3"
+textColor = "#101828"
+borderColor = "#e4e7ec"
+dataframeHeaderBackgroundColor = "#f8fafc"
+baseRadius = "10px"
+showSidebarBorder = true
+metricValueFontWeight = 650
+
+[[theme.fontFaces]]
+family = "Inter"
+url = "app/static/fonts/InterVariable.woff2"
+weight = "100 900"
+
+[theme.sidebar]
 backgroundColor = "#ffffff"
-secondaryBackgroundColor = "#f4f1eb"
-textColor = "#1f1d1a"
-borderColor = "#e1ddd3"
-baseRadius = "0.75rem"
+secondaryBackgroundColor = "#f2f4f7"

@@ -44,6 +44,12 @@ def is_logged(key):
     return _open_record(key) is not None
 
 
+def raised_at(key):
+    """Time the open alert `key` was raised, or None if the log has not seen it yet."""
+    record = _open_record(key)
+    return record["raised"] if record else None
+
+
 def acknowledged_at(key):
     """Time the open alert `key` was acknowledged, or None."""
     record = _open_record(key)
@@ -59,11 +65,11 @@ def table():
     rows = []
     for record in reversed(_log()):
         if record["resolved"]:
-            status = "✅ Resolved"
+            status = "Resolved"
         elif record["acknowledged"]:
-            status = "🛠️ Acknowledged"
+            status = "Acknowledged"
         else:
-            status = "🚨 Open"
+            status = "Open"
         acknowledged = "—"
         if record["acknowledged"]:
             acknowledged = f"{clock_time(record['acknowledged'])} (after {record['acknowledged'] - record['raised']:.0f} s)"

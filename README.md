@@ -30,14 +30,28 @@ Built with Streamlit and three.js as a class proof of concept.
 
 ## Features
 
-- **3D digital twin.** Rotate, zoom, and click any zone to open its page.
-  Zones turn red when something is wrong, the chiller door swings open, and
-  the robot moves in real time.
+- **Interactive 3D digital twin.** Click any machine and the camera glides to
+  it, with a panel showing its live reading and buttons to simulate its fault,
+  resolve it, or open its page. Each fault looks different: cold mist pours
+  from an open chiller, a jammed line stops with a spinning warning beacon,
+  the leaking oven glows, rejected trays drop into a bin, a fallen crate blocks
+  the robot, and stock piles up for a banquet or a lunch rush. Alert pins float
+  above any zone in trouble, and the camera flies to a new alert by itself.
+- **Kitchen and front of house.** On the Overview, switch the twin between the
+  central kitchen and the restaurant dining room with its serving robot.
+- **A living kitchen.** The twin opens with a camera fly-in, product flow
+  arrows run along the production line, dim sum fill steamer baskets, trays
+  pass through the AI inspection tunnel, and staff move around. Fixing a fault
+  sends a technician to the machine and ends with a green tick. Left alone, the
+  camera sways gently from side to side, always facing the front.
+- **Twin toolbar.** Jump to a view (whole kitchen, cold rooms, production, the
+  robot), switch layers (status, a temperature heat map, safety zones), and
+  hover over a machine to see its reading.
 - **Safety zone overlay.** Use the sidebar toggle to show or hide the red
   thermal/mechanical zone, amber robot traffic corridors, and blue IoT
   environmental telemetry zone on the kitchen and dining-room twins. Colored
   outlines mark the wider safety areas around the equipment and robot routes.
-- **Demo Controls.** Sidebar switches trigger each fault. Switch one on and
+- **Scenario simulator.** Sidebar switches trigger each fault. Switch one on and
   the charts, alerts and twin react within seconds; switch it off and the
   system recovers.
 - **Alerts that explain themselves.** Each alert says what is wrong, what it
@@ -45,8 +59,10 @@ Built with Streamlit and three.js as a class proof of concept.
 - **Acknowledge workflow.** An operator can acknowledge an alert, and the
   Overview keeps a log of when each alert was raised, acknowledged and resolved.
 - **Presentation mode.** Larger text and no Streamlit toolbar, for projecting.
-- **Works offline.** three.js is included in the repo, so no internet is
-  needed once the Python packages are installed.
+- **Modern operations-console design.** Grouped navigation, KPI tiles with
+  live sparklines, alert cards, and a consistent light theme with the Inter font.
+- **Works offline.** three.js and the font are included in the repo, so no
+  internet is needed once the Python packages are installed.
 
 ![Smart Duck Oven page with roast cycle, temperature chart and 3D close-up](docs/duck-oven.png)
 
@@ -67,28 +83,42 @@ The app opens at http://localhost:8501.
 
 ## Giving the demo
 
-1. Start on **Overview**. Everything is green.
-2. In the sidebar, switch on **Chiller door left open**. Within about 15
-   seconds Chiller 1 turns red on the twin and an alert appears with the stock
-   at risk and the action to take.
-3. Click the chiller on the twin to jump to **IoT Temperature Monitoring** and
-   show the temperature climbing past its limit.
-4. Click **Acknowledge**, then switch the event off and watch it recover.
-5. Scroll to the **Alert log** on the Overview to show the full history.
-6. Repeat with any other system. **Reset all events** clears everything.
+Everything happens on the 3D twin, so the audience watches one place.
 
-For projecting, switch on **Presentation mode** at the bottom of the sidebar
-and collapse the sidebar with the « button.
+1. Start on **Overview**. Everything is green.
+2. Click **Chiller 1** on the twin. The camera glides over and a panel shows
+   its live temperature.
+3. Press **Simulate: Chiller door left open**. Within a few seconds the door
+   swings open, the chiller turns red, its temperature climbs past 5 °C and an
+   alert appears below the twin with the stock at risk and the action to take.
+4. Press **Open page** to show the temperature chart on IoT Temperature
+   Monitoring, or **Resolve fault** to watch it recover.
+5. Repeat with any machine: the dim sum forming line, the duck oven, the AI
+   quality check, the AMR robot, Dispatch (a banquet order), or the kitchen
+   pass on the FOH Service Robot page (a lunch rush).
+6. Scroll to the **Alert log** on the Overview to show the full history.
+
+The sidebar's scenario simulator mirrors the twin and can switch any fault on
+or off too; **Reset all scenarios** clears everything.
+
+For projecting, press **Full screen** on the Overview's digital twin. Only the
+3D twin is shown, filling the screen, with a switch between the central kitchen
+and the front of house; the **Full screen** button in the 3D toolbar also hides
+the browser's own bars (press Esc to leave), and **Exit** returns to the
+Overview. For the other pages, **Presentation mode** in the sidebar enlarges
+the text.
 
 ## How it works
 
 ```
-app.py            navigation and sidebar Demo Controls
+app.py            navigation and the sidebar scenario simulator
+ui.py             shared components: cards, KPI tiles, alerts, charts
+assets/           design system stylesheet and logo
 ui.py             shared page elements: headers, cards, charts, alert banners
 views/            one file per page
 sim/              one simulator per system, plus events and the alert log
 twin/             3D twins: Python builds the scene state, kitchen.js draws it
-static/vendor/    three.js (MIT licence), served locally
+static/           three.js (MIT licence) and the Inter font (OFL), served locally
 smoke_test.py     headless check of every page and event
 ```
 

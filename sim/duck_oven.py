@@ -51,7 +51,7 @@ def temperatures(now, seconds=HISTORY_S):
     for i in range(1, len(ticks)):
         recipe[i] = recipe[i - 1] + (setpoint[i] - recipe[i - 1]) * STEP_S / HEATING_LAG_S
 
-    leak = events.intensity("oven_door_leak", ticks, ramp_s=12)
+    leak = events.intensity("oven_door_leak", ticks, ramp_s=6)
     actual = recipe + 1.5 * clock.wave(ticks, seed=3) - LEAK_DROP_C * leak
     frame = pd.DataFrame({"time": clock.as_times(ticks), "recipe": recipe.round(1), "actual": actual.round(1)})
     return frame.iloc[warm_up // STEP_S:].reset_index(drop=True)
@@ -61,7 +61,7 @@ def core_temperature(now):
     """Core temperature of the ducks: climbs smoothly to just above the target."""
     progress = min(float(cycle_fraction(now)) / 0.9, 1)
     smooth = progress * progress * (3 - 2 * progress)
-    leak = float(events.intensity("oven_door_leak", now, ramp_s=12))
+    leak = float(events.intensity("oven_door_leak", now, ramp_s=6))
     return 8 + 70 * smooth - 10 * leak
 
 

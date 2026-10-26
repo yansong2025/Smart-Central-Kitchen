@@ -21,7 +21,7 @@ DEFECT_TYPES = ["Torn wrapper", "Underfilled", "Open seam", "Misshapen"]
 def inspections(now, seconds=HISTORY_S):
     """One row per inspected tray over the last `seconds`."""
     ticks = clock.timeline(now, seconds, STEP_S)
-    spike = events.intensity("defect_spike", ticks, ramp_s=10)
+    spike = events.intensity("defect_spike", ticks, ramp_s=6)
     defect_rate = BASE_DEFECT_RATE + SPIKE_DEFECT_RATE * spike
     defects = np.floor(TRAY_PIECES * defect_rate + clock.rand(ticks, 5)).astype(int)
 
