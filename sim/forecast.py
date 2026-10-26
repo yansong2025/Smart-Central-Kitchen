@@ -72,5 +72,6 @@ def status(now):
             f"Large banquet order received: tomorrow's demand is up by {extra:,} units",
             f"Tomorrow's production plan rises from {tomorrow - extra:,} to {tomorrow:,} units before the safety buffer",
             "Order the extra ingredients today and start tomorrow's shift earlier",
+            severity="notice",
         ))
     return {"headline": ("Tomorrow's demand", f"{tomorrow:,} units"), "alerts": alerts}

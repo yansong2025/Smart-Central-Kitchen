@@ -1,6 +1,10 @@
 
 /* Presentation mode: added on top of style.css when the sidebar toggle is on. */
-html { font-size: 19px; }                        /* everything sized in rem grows with this */
-[data-testid="stAppDeployButton"], [data-testid="stMainMenu"] { display: none; } /* Deploy button and menu */
-[data-testid="stStatusWidget"] { display: none; } /* "Running" indicator */
+html { font-size: 18px; }                         /* text sized in rem grows with this */
+.ph h1 { font-size: 32px; }
+.ph p, .card-sub, .kpi-note, .al-rows, .fact { font-size: 15px; }
+.card-title { font-size: 17px; }
+.kpi-value { font-size: 34px; }
+[data-testid="stAppDeployButton"], [data-testid="stMainMenu"] { display: none; }  /* Deploy button and menu */
+[data-testid="stStatusWidget"] { display: none; }  /* "Running" indicator */
 .block-container { max-width: 100%; }

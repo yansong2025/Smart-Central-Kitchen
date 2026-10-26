@@ -36,7 +36,7 @@ def service(now, seconds=HISTORY_S):
     A lunch rush piles orders up faster than one robot can deliver them.
     """
     ticks = clock.timeline(now, seconds, STEP_S)
-    rush = events.intensity("lunch_rush", ticks, ramp_s=12)
+    rush = events.intensity("lunch_rush", ticks, ramp_s=6)
     backlog = np.clip(2 + 1.2 * clock.wave(ticks, seed=4) + 7 * rush, 1, None)
     return pd.DataFrame({
         "time": clock.as_times(ticks),

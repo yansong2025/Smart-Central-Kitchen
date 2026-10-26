@@ -22,12 +22,13 @@ EVENTS = {
 }
 
 
-def alert(key, message, impact, action):
+def alert(key, message, impact, action, severity="critical"):
     """An alert as shown to the operator: what is wrong, what it costs, and what to do.
 
     `key` identifies the alert in the alert log while the wording changes (e.g. the temperature).
+    `severity` is "critical" for a fault, or "notice" for a change that needs planning, not repair.
     """
-    return {"key": key, "message": message, "impact": impact, "action": action}
+    return {"key": key, "message": message, "impact": impact, "action": action, "severity": severity}
 
 
 def _events():
